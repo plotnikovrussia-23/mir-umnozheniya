@@ -1,19 +1,28 @@
 :root {
-  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  font-family: Verdana, "Trebuchet MS", sans-serif;
   line-height: 1.4;
   font-weight: 400;
-  color: #15233e;
+  color: #1f2a1a;
   background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.6), transparent 30%),
-    linear-gradient(180deg, #c9f4ff 0%, #eef9ff 100%);
+    linear-gradient(180deg, #b8e4ff 0%, #e4f5ff 52%, #8dd0ff 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --world-accent: #4dd8ff;
-  --world-accent-soft: #d9fbff;
-  --world-accent-strong: #0f7fa3;
-  --world-background: linear-gradient(180deg, #e5fdff 0%, #b0f2ff 48%, #67cbe5 100%);
+  --world-accent: #61b045;
+  --world-accent-soft: #d6efbf;
+  --world-accent-strong: #356b2b;
+  --world-background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 38%),
+    linear-gradient(180deg, #b8e4ff 0%, #d7f1ff 45%, #87c86a 45%, #69a34f 100%);
+  --ui-stone: #d6d2c8;
+  --ui-stone-light: #efede7;
+  --ui-stone-dark: #8c8579;
+  --ui-dirt: #8a5a34;
+  --ui-dirt-dark: #5b3920;
+  --ui-grass: #67b549;
+  --ui-grass-dark: #3f7d2e;
+  --ui-shadow: rgba(53, 36, 18, 0.28);
 }
 
 * {
@@ -44,9 +53,11 @@ button {
   min-height: 100vh;
   padding: 16px;
   background:
-    radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.45), transparent 28%),
-    radial-gradient(circle at 90% 15%, rgba(255, 255, 255, 0.35), transparent 22%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 6%, transparent 6% 12%),
+    linear-gradient(rgba(255, 255, 255, 0.06) 0 6%, transparent 6% 12%),
+    radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.32), transparent 28%),
     var(--world-background);
+  background-size: auto, auto, auto, auto;
   overflow: hidden;
 }
 
@@ -111,10 +122,14 @@ button {
   justify-content: space-between;
   gap: 12px;
   padding: 14px 18px;
-  border: 4px solid rgba(17, 42, 76, 0.16);
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(10px);
+  border: 4px solid var(--ui-stone-dark);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, var(--ui-stone-light) 0%, var(--ui-stone) 100%);
+  box-shadow:
+    inset 0 4px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -4px 0 rgba(77, 69, 58, 0.16),
+    0 8px 0 rgba(92, 79, 60, 0.34);
 }
 
 .brand {
@@ -134,12 +149,14 @@ button {
   place-items: center;
   width: 52px;
   height: 52px;
-  border-radius: 16px;
-  background: linear-gradient(180deg, var(--world-accent) 0%, var(--world-accent-strong) 100%);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, var(--ui-grass) 0%, var(--ui-grass-dark) 100%);
+  border: 3px solid rgba(36, 68, 20, 0.45);
   color: white;
   font-size: 2rem;
   font-weight: 900;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 0 rgba(54, 87, 33, 0.42);
 }
 
 .eyebrow {
@@ -155,10 +172,11 @@ button {
 .primary-button,
 .choice-button {
   border: 0;
-  border-radius: 18px;
+  border-radius: 10px;
   min-height: 56px;
   padding: 0 20px;
   font-weight: 800;
+  letter-spacing: 0.03em;
   transition:
     transform 150ms ease,
     box-shadow 150ms ease,
@@ -167,21 +185,30 @@ button {
 
 .sound-toggle,
 .secondary-button {
-  background: rgba(255, 255, 255, 0.82);
-  color: #16314f;
-  box-shadow: inset 0 0 0 3px rgba(22, 49, 79, 0.12);
+  background: linear-gradient(180deg, #f6f2ea 0%, #d7d0c4 100%);
+  color: #2d2a24;
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -3px 0 rgba(99, 90, 78, 0.22),
+    0 5px 0 rgba(99, 90, 78, 0.4);
 }
 
 .primary-button {
-  background: linear-gradient(180deg, var(--world-accent) 0%, var(--world-accent-strong) 100%);
-  color: #fff;
-  box-shadow: 0 14px 24px rgba(14, 42, 88, 0.24);
+  background: linear-gradient(180deg, var(--ui-grass) 0%, var(--ui-grass-dark) 100%);
+  color: #fffdf6;
+  box-shadow:
+    inset 0 3px 0 rgba(223, 255, 206, 0.35),
+    inset 0 -3px 0 rgba(30, 68, 22, 0.28),
+    0 6px 0 rgba(38, 73, 26, 0.42);
 }
 
 .choice-button {
-  background: white;
-  color: #16314f;
-  box-shadow: inset 0 0 0 3px rgba(22, 49, 79, 0.12);
+  background: linear-gradient(180deg, #f6f2ea 0%, #ddd7cb 100%);
+  color: #2d2a24;
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.52),
+    inset 0 -3px 0 rgba(99, 90, 78, 0.18),
+    0 5px 0 rgba(99, 90, 78, 0.32);
 }
 
 .sound-toggle:hover,
@@ -347,9 +374,14 @@ button {
 .teacher-card,
 .medal-card {
   padding: 24px;
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: 0 20px 34px rgba(12, 40, 84, 0.12);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, var(--ui-stone-light) 0%, var(--ui-stone) 100%);
+  border: 4px solid var(--ui-stone-dark);
+  box-shadow:
+    inset 0 4px 0 rgba(255, 255, 255, 0.42),
+    inset 0 -4px 0 rgba(87, 77, 64, 0.12),
+    0 10px 0 rgba(87, 77, 64, 0.26);
 }
 
 .teacher-stack {
@@ -389,9 +421,10 @@ button {
 .feedback-chip,
 .score-chip {
   padding: 14px 16px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.76);
-  box-shadow: inset 0 0 0 3px rgba(22, 49, 79, 0.08);
+  border-radius: 10px;
+  background: linear-gradient(180deg, #f7f4ed 0%, #ddd6ca 100%);
+  border: 3px solid rgba(111, 101, 88, 0.65);
+  box-shadow: 0 5px 0 rgba(111, 101, 88, 0.22);
 }
 
 .world-frame {
@@ -405,9 +438,10 @@ button {
   gap: 18px;
   align-items: center;
   padding: 24px;
-  border-radius: 28px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 24px 48px rgba(12, 40, 84, 0.14);
+  border: 4px solid rgba(49, 85, 36, 0.5);
+  box-shadow: 0 10px 0 rgba(49, 85, 36, 0.22);
 }
 
 .world-banner h2 {
@@ -426,9 +460,12 @@ button {
 .scene {
   position: relative;
   min-height: 150px;
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.28);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03)),
+    rgba(255, 255, 255, 0.18);
   overflow: hidden;
+  border: 3px solid rgba(36, 68, 20, 0.22);
 }
 
 .scene__piece {
@@ -530,11 +567,13 @@ button {
   place-items: center;
   width: 92px;
   height: 92px;
-  border-radius: 26px;
-  background: linear-gradient(180deg, var(--world-accent) 0%, var(--world-accent-strong) 100%);
+  border-radius: 10px;
+  background: linear-gradient(180deg, var(--ui-grass) 0%, var(--ui-grass-dark) 100%);
+  border: 3px solid rgba(36, 68, 20, 0.4);
   color: white;
   font-size: 1.8rem;
   font-weight: 900;
+  box-shadow: 0 6px 0 rgba(36, 68, 20, 0.26);
 }
 
 .teacher-card__tip,
@@ -686,9 +725,10 @@ button {
   display: grid;
   gap: 8px;
   padding: 16px 18px;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: inset 0 0 0 3px rgba(22, 49, 79, 0.08);
+  border-radius: 10px;
+  background: linear-gradient(180deg, #f7f4ed 0%, #ddd6ca 100%);
+  border: 3px solid rgba(111, 101, 88, 0.56);
+  box-shadow: 0 5px 0 rgba(111, 101, 88, 0.22);
 }
 
 .teacher-guide__bubble::before {
@@ -717,14 +757,14 @@ button {
   position: relative;
   min-height: 260px;
   padding: 18px;
-  border-radius: 28px;
+  border-radius: 10px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.08)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.06)),
     var(--world-background);
-  border: 1px solid rgba(255, 255, 255, 0.45);
+  border: 4px solid rgba(85, 74, 60, 0.45);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.35),
-    0 24px 40px rgba(12, 40, 84, 0.16);
+    inset 0 3px 0 rgba(255, 255, 255, 0.2),
+    0 10px 0 rgba(85, 74, 60, 0.2);
   overflow: hidden;
 }
 
@@ -1073,9 +1113,10 @@ button {
   display: grid;
   gap: 12px;
   padding: 16px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.72);
-  box-shadow: inset 0 0 0 3px rgba(22, 49, 79, 0.08);
+  border-radius: 10px;
+  background: linear-gradient(180deg, #f8f4ec 0%, #e1d9cc 100%);
+  border: 3px solid rgba(111, 101, 88, 0.54);
+  box-shadow: 0 5px 0 rgba(111, 101, 88, 0.18);
 }
 
 .choice-row {
@@ -1094,9 +1135,10 @@ button {
   justify-content: center;
   padding: 20px 24px;
   margin: 10px auto 18px;
-  border-radius: 24px;
-  background: linear-gradient(180deg, white 0%, var(--world-accent-soft) 100%);
-  box-shadow: 0 14px 24px rgba(12, 40, 84, 0.12);
+  border-radius: 10px;
+  border: 4px solid rgba(62, 102, 44, 0.55);
+  background: linear-gradient(180deg, #f5f0e3 0%, var(--world-accent-soft) 100%);
+  box-shadow: 0 6px 0 rgba(62, 102, 44, 0.24);
   font-size: clamp(2rem, 6vw, 3.5rem);
   font-weight: 900;
 }
@@ -1111,12 +1153,12 @@ button {
 .answer-field input {
   min-height: 62px;
   padding: 0 18px;
-  border: 3px solid rgba(22, 49, 79, 0.12);
-  border-radius: 18px;
-  background: white;
+  border: 4px solid rgba(98, 88, 73, 0.55);
+  border-radius: 8px;
+  background: #faf7ef;
   font-size: 1.5rem;
   font-weight: 900;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.5);
 }
 
 .answer-field input:focus {
@@ -1208,8 +1250,10 @@ button {
       #22c55e 270deg 315deg,
       #fb7185 315deg 360deg
     );
-  border: 8px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 26px 40px rgba(12, 40, 84, 0.2);
+  border: 10px solid rgba(230, 223, 212, 0.95);
+  box-shadow:
+    inset 0 4px 0 rgba(255, 255, 255, 0.4),
+    0 10px 0 rgba(96, 78, 51, 0.24);
 }
 
 .wheel--spinning {
@@ -1229,10 +1273,11 @@ button {
   height: 44px;
   display: grid;
   place-items: center;
-  border-radius: 14px;
+  border-radius: 8px;
   font-weight: 900;
-  color: #14304f;
-  background: rgba(255, 255, 255, 0.84);
+  color: #2f2a24;
+  background: linear-gradient(180deg, #faf6ef 0%, #dfd7c8 100%);
+  border: 3px solid rgba(111, 101, 88, 0.35);
 }
 
 .wheel__segment--active {
@@ -1250,13 +1295,15 @@ button {
   width: 108px;
   height: 108px;
   margin: -54px;
-  border-radius: 30px;
+  border-radius: 12px;
   display: grid;
   place-items: center;
   font-size: 2rem;
   font-weight: 900;
   color: white;
-  background: linear-gradient(180deg, #1a3352 0%, #0d1e38 100%);
+  background: linear-gradient(180deg, #5a3d22 0%, #3f2916 100%);
+  border: 4px solid rgba(255, 243, 221, 0.18);
+  box-shadow: 0 6px 0 rgba(48, 31, 15, 0.3);
 }
 
 @keyframes spin {
