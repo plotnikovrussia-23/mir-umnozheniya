@@ -1187,9 +1187,12 @@ button {
 }
 
 .wheel {
+  --wheel-size: min(78vw, 360px);
   position: relative;
-  width: min(78vw, 360px);
-  aspect-ratio: 1;
+  width: var(--wheel-size);
+  height: var(--wheel-size);
+  max-width: 100%;
+  flex: 0 0 var(--wheel-size);
   margin: 0 auto;
   border-radius: 50%;
   background:
@@ -1381,7 +1384,7 @@ button {
   }
 
   .wheel {
-    width: min(82vw, 320px);
+    --wheel-size: min(82vw, 320px);
   }
 
   .wheel__segment {
