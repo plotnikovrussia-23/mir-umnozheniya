@@ -117,6 +117,7 @@ function getRandomLine(lines: string[]) {
 
 function App() {
   const [screen, setScreen] = useState<GameScreen>("splash");
+  const [learningRange, setLearningRange] = useState<"short" | "full">("short");
   const [selectedMultiplier, setSelectedMultiplier] = useState<number>(2);
   const [spinning, setSpinning] = useState(false);
   const [wheelPreview, setWheelPreview] = useState<number>(2);
@@ -144,8 +145,26 @@ function App() {
   });
   const audioRef = useRef(new AudioEngine());
 
+  const availableWorlds = worlds.filter((world) =>
+    learningRange === "short" ? world.multiplier <= 5 : world.multiplier <= 9,
+  );
   const currentWorld = worldMap[selectedMultiplier];
-  const totalWorldsCleared = Object.values(progress).filter((medal) => medal !== "none").length;
+  const totalWorldsCleared = availableWorlds.filter(
+    (world) => (progress[world.multiplier] ?? "none") !== "none",
+  ).length;
+
+  useEffect(() => {
+    const firstAvailable = availableWorlds[0]?.multiplier ?? 2;
+    const lastAvailable = availableWorlds[availableWorlds.length - 1]?.multiplier ?? 9;
+
+    if (selectedMultiplier < firstAvailable || selectedMultiplier > lastAvailable) {
+      setSelectedMultiplier(firstAvailable);
+    }
+
+    if (wheelPreview < firstAvailable || wheelPreview > lastAvailable) {
+      setWheelPreview(firstAvailable);
+    }
+  }, [availableWorlds, selectedMultiplier, wheelPreview]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setScreen("home"), 2500);
@@ -213,7 +232,7 @@ function App() {
 
     await ensureAudioReady();
     setSpinning(true);
-    const pool = worlds.map((world) => world.multiplier);
+    const pool = availableWorlds.map((world) => world.multiplier);
     let ticks = 0;
 
     const spinTimer = window.setInterval(() => {
@@ -515,6 +534,27 @@ function App() {
                 <p>
                   Сначала тебя научат хитростям, потом ты потренируешься и соберёшь медали.
                 </p>
+                <div className="mode-picker">
+                  <p className="mode-picker__label">Выбери, какую часть таблицы ты уже учишь</p>
+                  <div className="mode-picker__options">
+                    <button
+                      className={`choice-button mode-picker__option ${learningRange === "short" ? "mode-picker__option--active" : ""}`}
+                      type="button"
+                      onClick={() => setLearningRange("short")}
+                    >
+                      <strong>До ×5</strong>
+                      <span>Только то, что уже выучили</span>
+                    </button>
+                    <button
+                      className={`choice-button mode-picker__option ${learningRange === "full" ? "mode-picker__option--active" : ""}`}
+                      type="button"
+                      onClick={() => setLearningRange("full")}
+                    >
+                      <strong>До ×9</strong>
+                      <span>Вся таблица умножения</span>
+                    </button>
+                  </div>
+                </div>
                 <div className="cta-row">
                   <button
                     className="primary-button"
@@ -542,8 +582,8 @@ function App() {
                 <span>миров с медалями</span>
               </div>
               <div className="stat-chip">
-                <strong>8</strong>
-                <span>уникальных миров</span>
+                <strong>{availableWorlds.length}</strong>
+                <span>миров в этом режиме</span>
               </div>
             </div>
           </section>
@@ -553,13 +593,13 @@ function App() {
           <section className="screen wheel-screen">
             <div className="wheel-layout">
               <div className={`wheel ${spinning ? "wheel--spinning" : ""}`}>
-                {[2, 3, 4, 5, 6, 7, 8, 9].map((value, index) => (
+                {availableWorlds.map((world, index) => (
                   <span
-                    key={value}
-                    className={`wheel__segment ${wheelPreview === value ? "wheel__segment--active" : ""}`}
+                    key={world.multiplier}
+                    className={`wheel__segment ${wheelPreview === world.multiplier ? "wheel__segment--active" : ""}`}
                     style={{ ["--segment-index" as "--segment-index"]: index } as CSSProperties}
                   >
-                    ×{value}
+                    ×{world.multiplier}
                   </span>
                 ))}
                 <div className="wheel__center">×{wheelPreview}</div>
@@ -567,7 +607,10 @@ function App() {
               <div className="panel">
                 <p className="eyebrow">Колесо случайности</p>
                 <h2>Куда отправимся сегодня?</h2>
-                <p>Нажми кнопку, и игра выберет мир от ×2 до ×9.</p>
+                <p>
+                  Нажми кнопку, и игра выберет мир{" "}
+                  {learningRange === "short" ? "от ×2 до ×5." : "от ×2 до ×9."}
+                </p>
                 <div className="cta-row">
                   <button className="primary-button" type="button" onClick={handleSpin}>
                     {spinning ? "Крутится..." : "Крутить"}
@@ -718,10 +761,14 @@ function App() {
                 <div className="panel">
                   <p className="eyebrow">Коллекция</p>
                   <h3>Мои медали</h3>
-                  <p>Каждый мир от ×2 до ×9 хранит лучшую награду прямо на этом устройстве.</p>
+                  <p>
+                    {learningRange === "short"
+                      ? "Здесь показаны миры от ×2 до ×5 для текущего режима."
+                      : "Здесь показаны все миры от ×2 до ×9."}
+                  </p>
                 </div>
                 <div className="medal-grid">
-                  {worlds.map((world) => {
+                  {availableWorlds.map((world) => {
                     const medal = progress[world.multiplier] ?? "none";
                     return (
                       <article key={world.multiplier} className={`medal-tile medal-tile--${medal}`}>
